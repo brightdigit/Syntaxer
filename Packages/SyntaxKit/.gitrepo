@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:brightdigit/SyntaxKit.git
+	branch = syntaxer
+	commit = 61fb4862f0554894a22d7c17aa9a29b9a47a2c51
+	parent = 0ab8ebf7ee1094a15a5cb36d999ee6c70cddb92e
+	method = merge
+	cmdver = 0.4.9
