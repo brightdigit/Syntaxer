@@ -1,5 +1,5 @@
 {
-  "originHash" : "9f32186736f370e7955e9cc3804af63f680f98951a93705d29ae56f58a50b857",
+  "originHash" : "b66354fe5f0ac79cd41698f48883aeec36021e483190e78c264ac756e7fd24b6",
   "pins" : [
     {
       "identity" : "swift-argument-parser",
@@ -17,15 +17,6 @@
       "state" : {
         "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
         "version" : "601.0.1"
-      }
-    },
-    {
-      "identity" : "syntaxkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/brightdigit/SyntaxKit.git",
-      "state" : {
-        "revision" : "61fb4862f0554894a22d7c17aa9a29b9a47a2c51",
-        "version" : "0.0.2"
       }
     }
   ],
