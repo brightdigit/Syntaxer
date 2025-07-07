@@ -7,10 +7,12 @@ public struct CodeGenerationService {
     public struct GenerationOptions {
         public let timeout: TimeInterval
         public let workingDirectory: URL?
+        public let syntaxKitPath: String?
         
-        public init(timeout: TimeInterval = 30.0, workingDirectory: URL? = nil) {
+        public init(timeout: TimeInterval = 30.0, workingDirectory: URL? = nil, syntaxKitPath: String? = nil) {
             self.timeout = timeout
             self.workingDirectory = workingDirectory
+            self.syntaxKitPath = syntaxKitPath
         }
     }
     
@@ -52,8 +54,11 @@ public struct CodeGenerationService {
         // Set restrictive permissions on temp directory
         try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: packageDir.path)
         
+        // Always use GitHub URL for now to avoid path issues
+        let syntaxKitDependency = ".package(url: \"https://github.com/brightdigit/SyntaxKit.git\", branch: \"syntaxer\")"
+        
         // Generate package files
-        let packageManifest = generatePackageManifest()
+        let packageManifest = generatePackageManifest(syntaxKitDependency: syntaxKitDependency)
         let mainSwift = generateMainSwift(with: dslCode)
         
         // Write package files
@@ -81,7 +86,9 @@ public struct CodeGenerationService {
         
         guard buildResult.terminationStatus == 0 else {
             let errorOutput = buildResult.standardError ?? "Unknown build error"
-            throw ValidationError("Failed to build evaluation package: \(errorOutput)")
+            let standardOutput = buildResult.standardOutput ?? ""
+            let fullOutput = "STDERR:\n\(errorOutput)\n\nSTDOUT:\n\(standardOutput)"
+            throw ValidationError("Failed to build evaluation package: \(fullOutput)")
         }
         
         // Run the executable
@@ -156,7 +163,7 @@ public struct CodeGenerationService {
         }
     }
     
-    private func generatePackageManifest() -> String {
+    private func generatePackageManifest(syntaxKitDependency: String) -> String {
         // Generate Package.swift using pure SyntaxKit with the Init type
         let packageFile = Group {
             Import("PackageDescription")
@@ -170,8 +177,8 @@ public struct CodeGenerationService {
                         Literal.ref(".macOS(.v13)")
                     ]))
                     ParameterExp(name: "dependencies", value: Literal.array([
-                        // For method calls with parameters, use Literal.ref
-                        Literal.ref(".package(url: \"https://github.com/brightdigit/SyntaxKit.git\", from: \"0.0.2\")")
+                        // Use the provided dependency string
+                        Literal.ref(syntaxKitDependency)
                     ]))
                     ParameterExp(name: "targets", value: Literal.array([
                         Literal.ref("""

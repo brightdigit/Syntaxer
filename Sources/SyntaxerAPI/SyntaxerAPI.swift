@@ -133,8 +133,8 @@ class HTTPServerFoundation: @unchecked Sendable {
             }
             
             // Get timeout from request or use default
-            let timeout = (json["timeout"] as? Double) ?? 30.0
-            guard timeout > 0 && timeout <= 120.0 else {
+            let timeout = (json["timeout"] as? Double) ?? 240.0
+            guard timeout > 0 && timeout <= 240.0 else {
                 return (400, "application/json", "{\"error\": \"Invalid timeout (must be between 1 and 120 seconds)\", \"success\": false}")
             }
             

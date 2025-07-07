@@ -1,0 +1,324 @@
+Building for debugging...
+[0/3] Write swift-version-39B54973F684ADAB.txt
+Build of product 'syntaxer-api' complete! (0.11s)
+🚀 Starting SyntaxerAPI server on http://127.0.0.1:8080
+📝 Available endpoints:
+   GET  /health      - Health check
+   POST /api/generate - Generate Swift code from DSL
+
+🧪 Test with curl:
+   curl -X GET http://localhost:8080/health
+   curl -X POST http://localhost:8080/api/generate \
+        -H "Content-Type: application/json" \
+        -d '{"dslCode": "Function(.public, name: \"hello\") { Return(\"String\") }"}'
+
+⏰ Warning: Code generation can take 30+ seconds due to Swift package compilation
+🔄 Server running... Press Ctrl+C to stop
+
+📨 POST /api/generate
+🔧 Generating code with timeout: 240.0s
+❌ Validation error: Failed to build evaluation package: STDERR:
+Fetching https://github.com/brightdigit/SyntaxKit.git from cache
+Fetched https://github.com/brightdigit/SyntaxKit.git from cache (0.31s)
+Fetching https://github.com/apple/swift-syntax.git from cache
+Fetched https://github.com/apple/swift-syntax.git from cache (1.35s)
+Computing version for https://github.com/apple/swift-syntax.git
+Computed https://github.com/apple/swift-syntax.git at 601.0.1 (1.45s)
+Creating working copy for https://github.com/apple/swift-syntax.git
+Working copy of https://github.com/apple/swift-syntax.git resolved at 601.0.1
+Creating working copy for https://github.com/brightdigit/SyntaxKit.git
+Working copy of https://github.com/brightdigit/SyntaxKit.git resolved at syntaxer (61fb486)
+
+
+STDOUT:
+Building for debugging...
+[0/16] Write sources
+[0/16] Write SyntaxKitEval-entitlement.plist
+[0/16] Write sources
+[11/16] Compiling _SwiftSyntaxCShims dummy.c
+[12/16] Write swift-version-39B54973F684ADAB.txt
+[14/24] Emitting module SwiftSyntax601
+[15/24] Emitting module SwiftSyntax509
+[16/24] Compiling SwiftSyntax601 Empty.swift
+[17/24] Compiling SwiftSyntax509 Empty.swift
+[18/24] Emitting module SwiftSyntax600
+[19/24] Compiling SwiftSyntax600 Empty.swift
+[20/24] Compiling SwiftSyntax510 Empty.swift
+[21/24] Emitting module SwiftSyntax510
+[22/88] Compiling SwiftSyntax AbsolutePosition.swift
+[23/88] Compiling SwiftSyntax AbsoluteRawSyntax.swift
+[24/88] Compiling SwiftSyntax AbsoluteSyntaxInfo.swift
+[25/88] Compiling SwiftSyntax Assert.swift
+[26/88] Compiling SwiftSyntax BumpPtrAllocator.swift
+[27/88] Compiling SwiftSyntax CommonAncestor.swift
+[28/88] Compiling SwiftSyntax Convenience.swift
+[29/88] Compiling SwiftSyntax CustomTraits.swift
+[30/88] Compiling SwiftSyntax EditorPlaceholder.swift
+[31/97] Compiling SwiftSyntax Identifier.swift
+[32/97] Compiling SwiftSyntax MemoryLayout.swift
+[33/97] Compiling SwiftSyntax MissingNodeInitializers.swift
+[34/97] Compiling SwiftSyntax RawSyntax.swift
+[35/97] Compiling SwiftSyntax RawSyntaxLayoutView.swift
+[36/97] Compiling SwiftSyntax RawSyntaxNodeProtocol.swift
+[37/97] Compiling SwiftSyntax RawSyntaxTokenView.swift
+[38/97] Compiling SwiftSyntax SourceEdit.swift
+[39/97] Compiling SwiftSyntax SourceLength.swift
+[40/97] Compiling SwiftSyntax RawSyntaxNodesC.swift
+[41/97] Compiling SwiftSyntax RawSyntaxNodesD.swift
+[42/97] Compiling SwiftSyntax RawSyntaxNodesEF.swift
+[43/97] Compiling SwiftSyntax RawSyntaxNodesGHI.swift
+[44/97] Compiling SwiftSyntax RawSyntaxNodesJKLMN.swift
+[45/97] Compiling SwiftSyntax RawSyntaxNodesOP.swift
+[46/97] Compiling SwiftSyntax RawSyntaxNodesQRS.swift
+[47/97] Compiling SwiftSyntax RawSyntaxNodesTUVWXYZ.swift
+[48/97] Compiling SwiftSyntax RawSyntaxValidation.swift
+[49/97] Compiling SwiftSyntax SourceLocation.swift
+[50/97] Compiling SwiftSyntax SourcePresence.swift
+[51/97] Compiling SwiftSyntax SwiftSyntaxCompatibility.swift
+[52/97] Compiling SwiftSyntax Syntax.swift
+[53/97] Compiling SwiftSyntax SyntaxArena.swift
+[54/97] Compiling SwiftSyntax SyntaxArenaAllocatedBuffer.swift
+[55/97] Compiling SwiftSyntax SyntaxChildren.swift
+[56/97] Compiling SwiftSyntax SyntaxCollection.swift
+[57/97] Compiling SwiftSyntax SyntaxHashable.swift
+[58/97] Compiling SwiftSyntax SyntaxEnum.swift
+[59/97] Compiling SwiftSyntax SyntaxKind.swift
+[60/97] Compiling SwiftSyntax SyntaxRewriter.swift
+[61/97] Compiling SwiftSyntax SyntaxTraits.swift
+[62/97] Compiling SwiftSyntax SyntaxVisitor.swift
+[63/97] Compiling SwiftSyntax TokenKind.swift
+[64/97] Compiling SwiftSyntax Tokens.swift
+[65/97] Compiling SwiftSyntax TriviaPieces.swift
+[66/97] Compiling SwiftSyntax RawSyntaxNodesAB.swift
+[67/97] Compiling SwiftSyntax SyntaxIdentifier.swift
+[68/97] Compiling SwiftSyntax SyntaxNodeFactory.swift
+[69/97] Compiling SwiftSyntax SyntaxNodeStructure.swift
+[70/97] Compiling SwiftSyntax SyntaxProtocol.swift
+[71/97] Compiling SwiftSyntax SyntaxText.swift
+[72/97] Compiling SwiftSyntax SyntaxTreeViewMode.swift
+[73/97] Compiling SwiftSyntax TokenDiagnostic.swift
+[74/97] Compiling SwiftSyntax TokenSequence.swift
+[75/97] Compiling SwiftSyntax TokenSyntax.swift
+[76/97] Compiling SwiftSyntax Trivia.swift
+[77/97] Compiling SwiftSyntax Utils.swift
+[78/97] Compiling SwiftSyntax ChildNameForKeyPath.swift
+[79/97] Compiling SwiftSyntax Keyword.swift
+[80/97] Compiling SwiftSyntax RenamedChildrenCompatibility.swift
+[81/97] Compiling SwiftSyntax RenamedNodesCompatibility.swift
+[82/97] Compiling SwiftSyntax SyntaxAnyVisitor.swift
+[83/97] Compiling SwiftSyntax SyntaxBaseNodes.swift
+[84/97] Compiling SwiftSyntax SyntaxCollections.swift
+[85/97] Emitting module SwiftSyntax
+[86/97] Compiling SwiftSyntax SyntaxNodesAB.swift
+[87/97] Compiling SwiftSyntax SyntaxNodesC.swift
+[88/97] Compiling SwiftSyntax SyntaxNodesD.swift
+[89/97] Compiling SwiftSyntax SyntaxNodesEF.swift
+[90/97] Compiling SwiftSyntax SyntaxNodesGHI.swift
+[91/97] Compiling SwiftSyntax SyntaxNodesJKLMN.swift
+[92/97] Compiling SwiftSyntax SyntaxNodesOP.swift
+[93/97] Compiling SwiftSyntax SyntaxNodesQRS.swift
+[94/97] Compiling SwiftSyntax SyntaxNodesTUVWXYZ.swift
+[95/148] Compiling SwiftDiagnostics Message.swift
+[96/149] Compiling SwiftDiagnostics FixIt.swift
+[97/149] Compiling SwiftDiagnostics DiagnosticsFormatter.swift
+[98/149] Compiling SwiftDiagnostics DiagnosticDecorator.swift
+[99/149] Emitting module SwiftDiagnostics
+[100/149] Compiling SwiftParser CharacterInfo.swift
+[101/149] Compiling SwiftParser CollectionNodes+Parsable.swift
+[102/149] Compiling SwiftDiagnostics GroupedDiagnostics.swift
+[103/149] Compiling SwiftParser Attributes.swift
+[104/149] Compiling SwiftParser Availability.swift
+[105/149] Compiling SwiftDiagnostics Note.swift
+[106/149] Compiling SwiftParser Modifiers.swift
+[107/149] Compiling SwiftParser Names.swift
+[108/149] Compiling SwiftParser Nominals.swift
+[109/149] Compiling SwiftParser Parameters.swift
+[110/149] Compiling SwiftParser ParseSourceFile.swift
+[111/149] Compiling SwiftParser Parser.swift
+[112/154] Compiling SwiftParser TokenSpec.swift
+[113/154] Compiling SwiftParser TokenSpecSet.swift
+[114/154] Compiling SwiftParser TopLevel.swift
+[115/154] Compiling SwiftParser TriviaParser.swift
+[116/154] Compiling SwiftParser Types.swift
+[117/154] Emitting module SwiftParser
+[122/154] Compiling SwiftParser Declarations.swift
+[123/154] Compiling SwiftParser Directives.swift
+[124/154] Compiling SwiftParser SwiftParserCompatibility.swift
+[125/154] Compiling SwiftParser SwiftVersion.swift
+[126/154] Compiling SwiftParser SyntaxUtils.swift
+[127/154] Compiling SwiftParser TokenConsumer.swift
+[128/154] Compiling SwiftParser TokenPrecedence.swift
+[129/154] Compiling SwiftParser LexemeSequence.swift
+[130/154] Compiling SwiftParser Lexer.swift
+[131/154] Compiling SwiftParser RegexLiteralLexer.swift
+[132/154] Compiling SwiftParser UnicodeScalarExtensions.swift
+[133/154] Compiling SwiftParser Lookahead.swift
+[134/154] Compiling SwiftParser LoopProgressCondition.swift
+[135/154] Compiling SwiftParser Patterns.swift
+[136/154] Compiling SwiftParser Recovery.swift
+[137/154] Compiling SwiftParser Specifiers.swift
+[138/154] Compiling SwiftParser Statements.swift
+[139/154] Compiling SwiftParser StringLiteralRepresentedLiteralValue.swift
+[140/154] Compiling SwiftParser StringLiterals.swift
+[141/154] Compiling SwiftParser ExpressionInterpretedAsVersionTuple.swift
+[142/154] Compiling SwiftParser Expressions.swift
+[143/154] Compiling SwiftParser IncrementalParseTransition.swift
+[144/154] Compiling SwiftParser IsValidIdentifier.swift
+[145/154] Compiling SwiftParser Cursor.swift
+[146/154] Compiling SwiftParser Lexeme.swift
+[147/154] Compiling SwiftParser ExperimentalFeatures.swift
+[148/154] Compiling SwiftParser IsLexerClassified.swift
+[149/154] Compiling SwiftParser LayoutNodes+Parsable.swift
+[150/154] Compiling SwiftParser Parser+TokenSpecSet.swift
+[151/154] Compiling SwiftParser TokenSpecStaticMembers.swift
+[152/164] Compiling SwiftOperators PrecedenceGroup.swift
+[153/164] Compiling SwiftOperators PrecedenceGraph.swift
+[154/165] Compiling SwiftOperators OperatorTable.swift
+[155/165] Compiling SwiftOperators OperatorTable+Semantics.swift
+[156/165] Emitting module SwiftOperators
+[157/165] Compiling SwiftOperators OperatorTable+Folding.swift
+[158/165] Compiling SwiftOperators OperatorError.swift
+[159/165] Compiling SwiftOperators OperatorTable+Defaults.swift
+[160/165] Compiling SwiftOperators Operator.swift
+[161/165] Compiling SwiftOperators OperatorError+Diagnostics.swift
+[162/165] Compiling SwiftOperators SyntaxSynthesis.swift
+[163/278] Compiling SyntaxKit DictionaryValue.swift
+[164/278] Compiling SyntaxKit PatternCodeBlock.swift
+[165/278] Compiling SyntaxKit PatternConvertableCollection.swift
+[166/278] Compiling SyntaxKit Tuple.swift
+[167/278] Compiling SyntaxKit TupleAssignment+AsyncSet.swift
+[168/278] Compiling SyntaxKit TupleAssignment.swift
+[169/278] Compiling SyntaxKit TupleLiteralArray.swift
+[170/278] Compiling SyntaxKit TuplePattern.swift
+[171/278] Compiling SyntaxKit Do.swift
+[172/278] Compiling SyntaxKit For.swift
+[173/278] Compiling SyntaxKit Guard.swift
+[174/278] Compiling SyntaxKit If+Body.swift
+[175/278] Compiling SyntaxKit If+CodeBlockItem.swift
+[176/278] Compiling SyntaxKit If+Conditions.swift
+[177/278] Compiling SyntaxKit If+ElseBody.swift
+[178/278] Compiling SyntaxKit If.swift
+[179/278] Emitting module SyntaxKit
+[180/278] Compiling SyntaxKit Function+Effects.swift
+[181/278] Compiling SyntaxKit Function+Modifiers.swift
+[182/278] Compiling SyntaxKit Function+Syntax.swift
+[183/278] Compiling SyntaxKit Function.swift
+[184/278] Compiling SyntaxKit FunctionParameterSyntax+Init.swift
+[185/278] Compiling SyntaxKit FunctionRequirement.swift
+[186/278] Compiling SyntaxKit Parameter.swift
+[187/278] Compiling SyntaxKit ParameterBuilderResult.swift
+[188/278] Compiling SyntaxKit ParameterExp.swift
+[189/278] Compiling SyntaxKit ParameterExpBuilderResult.swift
+[190/278] Compiling SyntaxKit SourceRange.swift
+[191/278] Compiling SyntaxKit String+Extensions.swift
+[192/278] Compiling SyntaxKit String.swift
+[193/278] Compiling SyntaxKit StructureProperty.swift
+[194/278] Compiling SyntaxKit StructureValue.swift
+[195/278] Compiling SyntaxKit SyntaxParser.swift
+[196/278] Compiling SyntaxKit Switch.swift
+[197/278] Compiling SyntaxKit SwitchCase.swift
+[198/278] Compiling SyntaxKit SwitchLet.swift
+[199/278] Compiling SyntaxKit While.swift
+[200/278] Compiling SyntaxKit AccessModifier.swift
+[201/278] Compiling SyntaxKit CaptureReferenceType.swift
+[202/278] Compiling SyntaxKit CodeBlock.swift
+[203/278] Compiling SyntaxKit ExprCodeBlockBuilder.swift
+[204/278] Compiling SyntaxKit Line.swift
+[205/278] Compiling SyntaxKit PatternConvertible.swift
+[206/278] Compiling SyntaxKit PatternConvertibleBuilder.swift
+[207/278] Compiling SyntaxKit TypeRepresentable.swift
+[208/278] Compiling SyntaxKit Class.swift
+[209/278] Compiling SyntaxKit Enum.swift
+[210/278] Compiling SyntaxKit Extension.swift
+[211/278] Compiling SyntaxKit Import.swift
+[212/278] Compiling SyntaxKit Attribute.swift
+[213/278] Compiling SyntaxKit Trivia+Comments.swift
+[214/278] Compiling SyntaxKit CodeBlock+ExprSyntax.swift
+[215/278] Compiling SyntaxKit CodeBlock+Generate.swift
+[216/278] Compiling SyntaxKit CodeBlockBuilder.swift
+[217/278] Compiling SyntaxKit CodeBlockBuilderResult.swift
+[218/278] Compiling SyntaxKit CodeBlockItemSyntax.Item.swift
+[219/278] Compiling SyntaxKit CommentedCodeBlock.swift
+[220/278] Compiling SyntaxKit EmptyCodeBlock.swift
+[221/278] Compiling SyntaxKit ExprCodeBlock.swift
+[222/278] Compiling SyntaxKit Array+LiteralValue.swift
+[223/278] Compiling SyntaxKit ArrayLiteral.swift
+[224/278] Compiling SyntaxKit CodeBlockableLiteral.swift
+[225/278] Compiling SyntaxKit Dictionary+LiteralValue.swift
+[226/278] Compiling SyntaxKit DictionaryExpr.swift
+[227/278] Compiling SyntaxKit DictionaryLiteral.swift
+[228/294] Compiling SyntaxKit SyntaxResponse.swift
+[229/294] Compiling SyntaxKit SyntaxType.swift
+[230/294] Compiling SyntaxKit Token.swift
+[231/294] Compiling SyntaxKit TokenVisitor+Helpers.swift
+[232/294] Compiling SyntaxKit TokenVisitor.swift
+[233/294] Compiling SyntaxKit TreeNode.swift
+[234/294] Compiling SyntaxKit Int+PatternConvertible.swift
+[235/294] Compiling SyntaxKit LetBindingPattern.swift
+[236/294] Compiling SyntaxKit Range+PatternConvertible.swift
+[237/294] Compiling SyntaxKit String+PatternConvertible.swift
+[238/294] Compiling SyntaxKit Break.swift
+[239/294] Compiling SyntaxKit Case.swift
+[240/294] Compiling SyntaxKit CodeBlockable.swift
+[241/294] Compiling SyntaxKit CommentBuilderResult.swift
+[242/294] Compiling SyntaxKit Continue.swift
+[243/294] Compiling SyntaxKit Default.swift
+[244/294] Compiling SyntaxKit ConditionalOp.swift
+[245/294] Compiling SyntaxKit FunctionCallExp.swift
+[246/294] Compiling SyntaxKit Infix.swift
+[247/294] Compiling SyntaxKit Literal+Convenience.swift
+[248/294] Compiling SyntaxKit Literal+ExprCodeBlock.swift
+[249/294] Compiling SyntaxKit Literal+PatternConvertible.swift
+[250/294] Compiling SyntaxKit Literal.swift
+[251/294] Compiling SyntaxKit LiteralValue.swift
+[252/294] Compiling SyntaxKit NegatedPropertyAccessExp.swift
+[253/294] Compiling SyntaxKit OptionalChainingExp.swift
+[254/294] Compiling SyntaxKit PlusAssign.swift
+[255/294] Compiling SyntaxKit PropertyAccessExp.swift
+[256/294] Compiling SyntaxKit PropertyAccessible.swift
+[257/294] Compiling SyntaxKit ReferenceExp.swift
+[258/294] Compiling SyntaxKit Return.swift
+[259/294] Compiling SyntaxKit Function+EffectSpecifiers.swift
+[260/294] Compiling SyntaxKit Init.swift
+[261/294] Compiling SyntaxKit Protocol.swift
+[262/294] Compiling SyntaxKit Struct.swift
+[263/294] Compiling SyntaxKit TypeAlias.swift
+[264/294] Compiling SyntaxKit Catch.swift
+[265/294] Compiling SyntaxKit CatchBuilder.swift
+[266/294] Compiling SyntaxKit Throw.swift
+[267/294] Compiling SyntaxKit Assignment.swift
+[268/294] Compiling SyntaxKit Call.swift
+[269/294] Compiling SyntaxKit Closure+Body.swift
+[270/294] Compiling SyntaxKit Closure+Capture.swift
+[271/294] Compiling SyntaxKit Closure+Signature.swift
+[272/294] Compiling SyntaxKit Closure.swift
+[273/294] Compiling SyntaxKit ClosureParameter.swift
+[274/294] Compiling SyntaxKit ClosureParameterBuilderResult.swift
+[275/294] Compiling SyntaxKit ClosureType.swift
+[276/294] Compiling SyntaxKit EnumCase+Syntax.swift
+[277/294] Compiling SyntaxKit EnumCase.swift
+[278/294] Compiling SyntaxKit Fallthrough.swift
+[279/294] Compiling SyntaxKit Group.swift
+[280/294] Compiling SyntaxKit Let.swift
+[281/294] Compiling SyntaxKit Parenthesized.swift
+[282/294] Compiling SyntaxKit PropertyRequirement.swift
+[283/294] Compiling SyntaxKit Then.swift
+[284/294] Compiling SyntaxKit ComputedProperty.swift
+[285/294] Compiling SyntaxKit Variable+Attributes.swift
+[286/294] Compiling SyntaxKit Variable+LiteralInitializers.swift
+[287/294] Compiling SyntaxKit Variable+Modifiers.swift
+[288/294] Compiling SyntaxKit Variable+TypedInitializers.swift
+[289/294] Compiling SyntaxKit Variable.swift
+[290/294] Compiling SyntaxKit VariableExp.swift
+[291/294] Compiling SyntaxKit VariableKind.swift
+[292/296] Emitting module SyntaxKitEval
+[293/296] Compiling SyntaxKitEval main.swift
+/private/var/folders/5w/9ggw8ymd2gd_3vlp3tw9t19m0000gn/T/syntaxkit_eval_42166D08-3385-4992-97C0-E69FBC5B51B1/Sources/SyntaxKitEval/main.swift:9:21: error: extraneous argument label 'name:' in call
+ 7 |         // Wrap the DSL code in a Group
+ 8 |         let code = Group {
+ 9 |             Function(.public, name: "hello") { Return("String") }
+   |                     `- error: extraneous argument label 'name:' in call
+10 |         }
+11 |         
+
+/private/var/folders/5w/9ggw8ymd2gd_3vlp3tw9t19m0000gn/T/syntaxkit_eval_42166D08-3385-4992-97C0-E69FBC5B51B1/Sources/SyntaxKitEval/main.swift:9:37: error: cannot convert value of type 'String' to expect
