@@ -55,7 +55,7 @@ public struct CodeGenerationService {
         try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: packageDir.path)
         
         // Always use GitHub URL for now to avoid path issues
-        let syntaxKitDependency = ".package(url: \"https://github.com/brightdigit/SyntaxKit.git\", branch: \"syntaxer\")"
+        let syntaxKitDependency = ".package(url: \"https://github.com/brightdigit/SyntaxKit.git\", branch: \"main\")"
         
         // Generate package files
         let packageManifest = generatePackageManifest(syntaxKitDependency: syntaxKitDependency)

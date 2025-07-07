@@ -1,0 +1,3 @@
+{
+  "dslCode": "Struct(\"Person\") {\n    Variable(.var, name: \"firstName\", type: \"String\")\n    Variable(.var, name: \"lastName\", type: \"String\")\n    Variable(.var, name: \"age\", type: \"Int\")\n}"
+}
