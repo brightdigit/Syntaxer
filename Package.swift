@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Syntaxer",
     platforms: [
-        .macOS(.v14)
+      .macOS(.v15)
     ],
     products: [
         .executable(
@@ -17,10 +17,12 @@ let package = Package(
             name: "syntaxer-api",
             targets: ["SyntaxerAPI"]
         ),
+        .executable(name: "SyntaxKitUI", targets: ["SyntaxKitUI"])
     ],
     dependencies: [
         .package(path: "Packages/SyntaxKit"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.3.0"),
+        .package(url: "https://github.com/swiftlang/swift-subprocess.git", branch: "main")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -40,10 +42,19 @@ let package = Package(
                 "SyntaxerCore"
             ]
         ),
+        .executableTarget(
+          name: "SyntaxKitUI",
+          dependencies: [
+              .product(name: "SyntaxKit", package: "SyntaxKit"),
+              "SyntaxerCore"
+          ]
+        ),
         .target(
             name: "SyntaxerCore",
             dependencies: [
-                .product(name: "SyntaxKit", package: "SyntaxKit")
+                .product(name: "SyntaxKit", package: "SyntaxKit"),
+                
+                  .product(name: "Subprocess", package: "swift-subprocess")
             ]
         ),
     ]

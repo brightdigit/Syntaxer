@@ -1,0 +1,58 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Syntaxer}",
+            "name": "Debug syntaxer",
+            "program": "${workspaceFolder:Syntaxer}/.build/debug/syntaxer",
+            "preLaunchTask": "swift: Build Debug syntaxer"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Syntaxer}",
+            "name": "Release syntaxer",
+            "program": "${workspaceFolder:Syntaxer}/.build/release/syntaxer",
+            "preLaunchTask": "swift: Build Release syntaxer"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Syntaxer}",
+            "name": "Debug syntaxer-api",
+            "program": "${workspaceFolder:Syntaxer}/.build/debug/syntaxer-api",
+            "preLaunchTask": "swift: Build Debug syntaxer-api"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Syntaxer}",
+            "name": "Release syntaxer-api",
+            "program": "${workspaceFolder:Syntaxer}/.build/release/syntaxer-api",
+            "preLaunchTask": "swift: Build Release syntaxer-api"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Syntaxer}",
+            "name": "Debug SyntaxKitUI",
+            "program": "${workspaceFolder:Syntaxer}/.build/debug/SyntaxKitUI",
+            "preLaunchTask": "swift: Build Debug SyntaxKitUI"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Syntaxer}",
+            "name": "Release SyntaxKitUI",
+            "program": "${workspaceFolder:Syntaxer}/.build/release/SyntaxKitUI",
+            "preLaunchTask": "swift: Build Release SyntaxKitUI"
+        }
+    ]
+}
