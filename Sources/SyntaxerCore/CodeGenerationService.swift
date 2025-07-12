@@ -1,18 +1,23 @@
 import Foundation
 import SyntaxKit
 import SwiftSyntax
+import os.log
 
 public struct CodeGenerationService {
+    
+    private let logger = Logger(subsystem: "com.syntaxer.core", category: "CodeGeneration")
     
     public struct GenerationOptions {
         public let timeout: TimeInterval
         public let workingDirectory: URL?
         public let syntaxKitPath: String?
+        public let enableLogging: Bool
         
-        public init(timeout: TimeInterval = 30.0, workingDirectory: URL? = nil, syntaxKitPath: String? = nil) {
+        public init(timeout: TimeInterval = 30.0, workingDirectory: URL? = nil, syntaxKitPath: String? = nil, enableLogging: Bool = true) {
             self.timeout = timeout
             self.workingDirectory = workingDirectory
             self.syntaxKitPath = syntaxKitPath
+            self.enableLogging = enableLogging
         }
     }
     
@@ -27,87 +32,154 @@ public struct CodeGenerationService {
     public init() {}
     
     public func generateCode(from dslCode: String, options: GenerationOptions = GenerationOptions()) async throws -> String {
+        logger.info("Starting code generation process")
+        logger.debug("DSL code length: \(dslCode.count) characters")
+        
         // Input validation
         guard !dslCode.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            logger.error("DSL code validation failed: empty input")
             throw ValidationError("DSL code cannot be empty")
         }
+        
+        logger.info("Input validation passed")
         
         // Basic security validation - prevent obvious injection attempts
         let dangerousPatterns = ["import Process", "import Darwin", "system(", "exec(", "fork(", "kill("]
         for pattern in dangerousPatterns {
             if dslCode.contains(pattern) {
+                logger.error("Security validation failed: detected dangerous pattern '\(pattern)'")
                 throw ValidationError("DSL code contains potentially dangerous patterns")
             }
         }
+        
+        logger.info("Security validation passed")
         
         // Create isolated temporary directory
         let tempDir = FileManager.default.temporaryDirectory
         let packageDir = tempDir.appendingPathComponent("syntaxkit_eval_\(UUID().uuidString)")
         
+        logger.info("Creating temporary directory at: \(packageDir.path)")
+        
         defer {
             // Always clean up
+            logger.info("Cleaning up temporary directory: \(packageDir.path)")
             try? FileManager.default.removeItem(at: packageDir)
         }
         
-        try FileManager.default.createDirectory(at: packageDir, withIntermediateDirectories: true)
+        do {
+            try FileManager.default.createDirectory(at: packageDir, withIntermediateDirectories: true)
+            logger.debug("Temporary directory created successfully")
+        } catch {
+            logger.error("Failed to create temporary directory: \(error.localizedDescription)")
+            throw error
+        }
         
         // Set restrictive permissions on temp directory
-        try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: packageDir.path)
+        do {
+            try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: packageDir.path)
+            logger.debug("Set restrictive permissions on temporary directory")
+        } catch {
+            logger.warning("Failed to set restrictive permissions: \(error.localizedDescription)")
+        }
         
         // Always use GitHub URL for now to avoid path issues
         let syntaxKitDependency = ".package(url: \"https://github.com/brightdigit/SyntaxKit.git\", branch: \"main\")"
+        logger.debug("Using SyntaxKit dependency: \(syntaxKitDependency)")
         
         // Generate package files
+        logger.info("Generating package manifest")
         let packageManifest = generatePackageManifest(syntaxKitDependency: syntaxKitDependency)
+        
+        logger.info("Generating main.swift file")
         let mainSwift = generateMainSwift(with: dslCode)
         
         // Write package files
-        try packageManifest.write(
-            to: packageDir.appendingPathComponent("Package.swift"),
-            atomically: true,
-            encoding: .utf8
-        )
+        let packageManifestPath = packageDir.appendingPathComponent("Package.swift")
+        do {
+            try packageManifest.write(
+                to: packageManifestPath,
+                atomically: true,
+                encoding: .utf8
+            )
+            logger.debug("Package.swift written to: \(packageManifestPath.path)")
+        } catch {
+            logger.error("Failed to write Package.swift: \(error.localizedDescription)")
+            throw error
+        }
         
         let sourcesDir = packageDir.appendingPathComponent("Sources/SyntaxKitEval")
-        try FileManager.default.createDirectory(at: sourcesDir, withIntermediateDirectories: true)
+        do {
+            try FileManager.default.createDirectory(at: sourcesDir, withIntermediateDirectories: true)
+            logger.debug("Sources directory created at: \(sourcesDir.path)")
+        } catch {
+            logger.error("Failed to create sources directory: \(error.localizedDescription)")
+            throw error
+        }
         
-        try mainSwift.write(
-            to: sourcesDir.appendingPathComponent("main.swift"),
-            atomically: true,
-            encoding: .utf8
-        )
+        let mainSwiftPath = sourcesDir.appendingPathComponent("main.swift")
+        do {
+            try mainSwift.write(
+                to: mainSwiftPath,
+                atomically: true,
+                encoding: .utf8
+            )
+            logger.debug("main.swift written to: \(mainSwiftPath.path)")
+        } catch {
+            logger.error("Failed to write main.swift: \(error.localizedDescription)")
+            throw error
+        }
         
         // Build the package using swift-subprocess
+        logger.info("Starting Swift package build")
         let buildResult = try await runSwiftCommand(
             arguments: ["build"],
             workingDirectory: packageDir,
             timeout: options.timeout
         )
         
+        logger.debug("Build completed with status: \(buildResult.terminationStatus)")
+        if let buildOutput = buildResult.standardOutput, !buildOutput.isEmpty {
+            logger.debug("Build output: \(buildOutput)")
+        }
+        
         guard buildResult.terminationStatus == 0 else {
             let errorOutput = buildResult.standardError ?? "Unknown build error"
             let standardOutput = buildResult.standardOutput ?? ""
             let fullOutput = "STDERR:\n\(errorOutput)\n\nSTDOUT:\n\(standardOutput)"
+            logger.error("Build failed: \(fullOutput)")
             throw ValidationError("Failed to build evaluation package: \(fullOutput)")
         }
         
+        logger.info("Build completed successfully")
+        
         // Run the executable
+        logger.info("Starting executable")
         let runResult = try await runSwiftCommand(
             arguments: ["run", "SyntaxKitEval"],
             workingDirectory: packageDir,
             timeout: options.timeout
         )
         
+        logger.debug("Execution completed with status: \(runResult.terminationStatus)")
+        if let runOutput = runResult.standardOutput, !runOutput.isEmpty {
+            logger.debug("Execution output: \(runOutput)")
+        }
+        
         guard runResult.terminationStatus == 0 else {
             let errorOutput = runResult.standardError ?? "Unknown execution error"
+            logger.error("Execution failed: \(errorOutput)")
             throw ValidationError("Failed to execute DSL code: \(errorOutput)")
         }
         
         guard let output = runResult.standardOutput else {
+            logger.error("No output received from execution")
             throw ValidationError("Failed to decode generated code")
         }
         
-        return output.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedOutput = output.trimmingCharacters(in: .whitespacesAndNewlines)
+        logger.info("Code generation completed successfully. Output length: \(trimmedOutput.count) characters")
+        
+        return trimmedOutput
     }
     
     private func runSwiftCommand(
@@ -115,6 +187,10 @@ public struct CodeGenerationService {
         workingDirectory: URL,
         timeout: TimeInterval
     ) async throws -> (standardOutput: String?, standardError: String?, terminationStatus: Int32) {
+        
+        logger.debug("Running Swift command: swift \(arguments.joined(separator: " "))")
+        logger.debug("Working directory: \(workingDirectory.path)")
+        logger.debug("Timeout: \(timeout) seconds")
         
         return try await withThrowingTaskGroup(of: (String?, String?, Int32).self) { group in
             group.addTask {
@@ -159,6 +235,14 @@ public struct CodeGenerationService {
             
             let result = try await group.next()!
             group.cancelAll()
+            
+            // Log results after the task group completes to avoid data races
+          
+            if let error = result.1, !error.isEmpty {
+                logger.debug("Process stderr: \(error)")
+            }
+            logger.debug("Swift process completed with status: \(result.2)")
+            
             return result
         }
     }

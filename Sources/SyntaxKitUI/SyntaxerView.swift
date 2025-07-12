@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SyntaxerCore
 
 class SyntaxAppDelegate : NSObject, NSApplicationDelegate {
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -28,16 +29,26 @@ struct SyntaxApp : App {
   
   var body: some Scene {
     WindowGroup{
-      SwiftUIView()
+      SyntaxerView()
     }
   }
 }
 
-struct SwiftUIView: View {
-    @State private var leftText: String = ""
+struct SyntaxerView: View {
+    @State private var leftText: String = """
+          Enum("Suit") {
+              EnumCase("spades").equals("♠")
+              EnumCase("hearts").equals("♡")
+              EnumCase("diamonds").equals("♢")
+              EnumCase("clubs").equals("♣")
+          }
+          .inherits("Character")
+      """
     @State private var rightText: String = ""
     @State private var bottomText: String = ""
     @State private var leftSplitPosition: CGFloat = 0.5
+    @State private var isBusy = false
+   
     
     var body: some View {
         VSplitView {
@@ -104,8 +115,21 @@ struct SwiftUIView: View {
             }
             
             Button("Process SyntaxKit") {
-                rightText = leftText
-            }
+              isBusy = true
+              Task {
+                let service = CodeGenerationService()
+                let rightText : String
+                do {
+                  rightText = try await service.generateCode(from: leftText)
+                } catch {
+                  print(error)
+                  isBusy = false
+                  return
+                }
+                self.rightText = rightText
+                isBusy = false
+              }
+            }.disabled(isBusy)
             
             Button("Clear Bottom") {
                 bottomText = ""
@@ -119,5 +143,5 @@ struct SwiftUIView: View {
 }
 
 #Preview {
-    SwiftUIView()
+    SyntaxerView()
 }
